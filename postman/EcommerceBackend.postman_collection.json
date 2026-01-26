@@ -1,0 +1,1217 @@
+{
+  "info": {
+    "_postman_id": "57bd3a20-10c1-4c6a-958f-a843d338bcbb",
+    "name": "Ecommerce Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20681959",
+    "_collection_link": "https://go.postman.co/collection/20681959-57bd3a20-10c1-4c6a-958f-a843d338bcbb?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User Service",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{userName}}\",\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/register",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.accessToken) { pm.collectionVariables.set(\"accessToken\", json.accessToken); }",
+                  "if (json.refreshToken) { pm.collectionVariables.set(\"refreshToken\", json.refreshToken); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/login",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.accessToken) { pm.collectionVariables.set(\"accessToken\", json.accessToken); }",
+                  "if (json.refreshToken) { pm.collectionVariables.set(\"refreshToken\", json.refreshToken); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/token/refresh",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "token",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accessToken\": \"{{accessToken}}\",\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/logout",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/me",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{userName}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/me",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request Password Reset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"resetBaseUrl\": \"http://localhost:3000/reset\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/password/reset/request",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "password",
+                "reset",
+                "request"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm Password Reset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"token\": \"{{resetToken}}\",\n  \"newPassword\": \"{{newPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/password/reset/confirm",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "password",
+                "reset",
+                "confirm"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Token (Internal)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{accessToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/api/v1/users/tokens/validate",
+              "host": [
+                "{{userServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "tokens",
+                "validate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Product Catalog Service",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/products?page=0&size=20&sort=createdAt,desc",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                },
+                {
+                  "key": "sort",
+                  "value": "createdAt,desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/products/{{productId}}",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.id) { pm.collectionVariables.set(\"productId\", json.id); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"SKU-{{$timestamp}}\",\n  \"name\": \"Phone {{$randomInt}}\",\n  \"description\": \"Smartphone\",\n  \"price\": 499.00,\n  \"currency\": \"USD\",\n  \"stockQuantity\": 10,\n  \"categoryId\": {{categoryId}},\n  \"status\": \"ACTIVE\",\n  \"images\": [{\"url\": \"https://img.example/phone-{{$randomInt}}.png\", \"sortOrder\": 1}],\n  \"specifications\": [{\"key\": \"color\", \"value\": \"black\"}]\n}"
+            },
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/products",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 479.00,\n  \"stockQuantity\": 8\n}"
+            },
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/products/{{productId}}",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/products/{{productId}}",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/products/search?q=phone&page=0&size=10",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "phone"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/categories",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/categories/{{categoryId}}",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "{{categoryId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Category",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.id) { pm.collectionVariables.set(\"categoryId\", json.id); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Electronics-{{$timestamp}}\",\n  \"description\": \"Gadgets\"\n}"
+            },
+            "url": {
+              "raw": "{{productServiceUrl}}/api/v1/categories",
+              "host": [
+                "{{productServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart Service",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{cartServiceUrl}}/api/v1/carts/me",
+              "host": [
+                "{{cartServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {{productId}},\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{cartServiceUrl}}/api/v1/carts/items",
+              "host": [
+                "{{cartServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "items"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 3\n}"
+            },
+            "url": {
+              "raw": "{{cartServiceUrl}}/api/v1/carts/items/{{productId}}",
+              "host": [
+                "{{cartServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "items",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{cartServiceUrl}}/api/v1/carts/items/{{productId}}",
+              "host": [
+                "{{cartServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "items",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{cartServiceUrl}}/api/v1/carts",
+              "host": [
+                "{{cartServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Checkout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.orderId) { pm.collectionVariables.set(\"orderId\", json.orderId); }",
+                  "if (json.totalAmount) { pm.collectionVariables.set(\"orderTotal\", json.totalAmount); }",
+                  "if (json.currency) { pm.collectionVariables.set(\"orderCurrency\", json.currency); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deliveryAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"Seattle\",\n    \"state\": \"WA\",\n    \"postalCode\": \"98101\",\n    \"country\": \"USA\"\n  },\n  \"paymentMethod\": \"CARD\"\n}"
+            },
+            "url": {
+              "raw": "{{cartServiceUrl}}/api/v1/carts/checkout",
+              "host": [
+                "{{cartServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "checkout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order Service",
+      "item": [
+        {
+          "name": "Create Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.orderId) { pm.collectionVariables.set(\"orderId\", json.orderId); }",
+                  "if (json.totalAmount) { pm.collectionVariables.set(\"orderTotal\", json.totalAmount); }",
+                  "if (json.currency) { pm.collectionVariables.set(\"orderCurrency\", json.currency); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deliveryAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"Seattle\",\n    \"state\": \"WA\",\n    \"postalCode\": \"98101\",\n    \"country\": \"USA\"\n  },\n  \"paymentMethod\": \"CARD\",\n  \"items\": [{\n    \"productId\": {{productId}},\n    \"quantity\": 1\n  }]\n}"
+            },
+            "url": {
+              "raw": "{{orderServiceUrl}}/api/v1/orders",
+              "host": [
+                "{{orderServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{orderServiceUrl}}/api/v1/orders?page=0&size=20",
+              "host": [
+                "{{orderServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{orderServiceUrl}}/api/v1/orders/{{orderId}}",
+              "host": [
+                "{{orderServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "{{orderId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Track Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{orderServiceUrl}}/api/v1/orders/{{orderId}}/tracking",
+              "host": [
+                "{{orderServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "{{orderId}}",
+                "tracking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"SHIPPED\",\n  \"description\": \"Left warehouse\"\n}"
+            },
+            "url": {
+              "raw": "{{orderServiceUrl}}/api/v1/orders/{{orderId}}/status",
+              "host": [
+                "{{orderServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "{{orderId}}",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payment Service",
+      "item": [
+        {
+          "name": "Create Payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.paymentId) { pm.collectionVariables.set(\"paymentId\", json.paymentId); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": {{orderId}},\n  \"amount\": {{orderTotal}},\n  \"currency\": \"{{orderCurrency}}\",\n  \"method\": \"CARD\"\n}"
+            },
+            "url": {
+              "raw": "{{paymentServiceUrl}}/api/v1/payments",
+              "host": [
+                "{{paymentServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{paymentServiceUrl}}/api/v1/payments/{{paymentId}}",
+              "host": [
+                "{{paymentServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "{{paymentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment By Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{paymentServiceUrl}}/api/v1/payments/by-order/{{orderId}}",
+              "host": [
+                "{{paymentServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "by-order",
+                "{{orderId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{paymentServiceUrl}}/api/v1/payments/{{paymentId}}/receipt",
+              "host": [
+                "{{paymentServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "{{paymentId}}",
+                "receipt"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notification Service",
+      "item": [
+        {
+          "name": "Send Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"{{userEmail}}\",\n  \"subject\": \"Hello\",\n  \"body\": \"Test message\"\n}"
+            },
+            "url": {
+              "raw": "{{notificationServiceUrl}}/api/v1/notifications/email",
+              "host": [
+                "{{notificationServiceUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "email"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "userServiceUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "productServiceUrl",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "cartServiceUrl",
+      "value": "http://localhost:8083"
+    },
+    {
+      "key": "orderServiceUrl",
+      "value": "http://localhost:8084"
+    },
+    {
+      "key": "paymentServiceUrl",
+      "value": "http://localhost:8085"
+    },
+    {
+      "key": "notificationServiceUrl",
+      "value": "http://localhost:8086"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "key": "idempotencyKey",
+      "value": "idemp-001"
+    },
+    {
+      "key": "categoryId",
+      "value": "1"
+    },
+    {
+      "key": "newPassword",
+      "value": "NewPass123"
+    },
+    {
+      "key": "orderCurrency",
+      "value": "USD"
+    },
+    {
+      "key": "orderId",
+      "value": "1"
+    },
+    {
+      "key": "orderTotal",
+      "value": "499.00"
+    },
+    {
+      "key": "paymentId",
+      "value": "1"
+    },
+    {
+      "key": "productId",
+      "value": "1"
+    },
+    {
+      "key": "resetToken",
+      "value": ""
+    },
+    {
+      "key": "userEmail",
+      "value": "jane@example.com"
+    },
+    {
+      "key": "userName",
+      "value": "Jane Doe"
+    },
+    {
+      "key": "userPassword",
+      "value": "StrongPass123"
+    },
+    {
+      "key": "stripeSignature",
+      "value": ""
+    },
+    {
+      "key": "stripeWebhookPayload",
+      "value": "{\"id\": \"evt_test\", \"type\": \"checkout.session.completed\", \"data\": {\"object\": {\"id\": \"cs_test\", \"payment_status\": \"paid\", \"client_reference_id\": \"1\", \"metadata\": {\"paymentId\": \"1\", \"orderId\": \"1\"}, \"url\": \"https://checkout.stripe.com/pay/cs_test\"}}}"
+    }
+  ]
+}
